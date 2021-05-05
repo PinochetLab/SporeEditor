@@ -53,9 +53,22 @@ public class GenerateMesh : MonoBehaviour
     {
         mesh.Clear();
         List<Vector3> points = new List<Vector3>();
-        foreach (Transform child in transform)
+        List<Transform> bones = BodyManager.instance.bones;
+        for (int i = 0; i < bones.Count; i++)
         {
-            points.Add(child.position);
+            if (i == 0)
+            {
+                points.Add(bones[i].GetComponent<Bone>().point1.position);
+                points.Add(bones[i].position);
+            }else if (i == bones.Count - 1)
+            {
+                points.Add(bones[i].position);
+                points.Add(bones[i].GetComponent<Bone>().point2.position);
+            }
+            else
+            {
+                points.Add(bones[i].position);
+            }
         }
         int n = 0;
         for (int i = 0; i < points.Count - 1; i++)

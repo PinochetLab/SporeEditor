@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class Bone : MonoBehaviour
 {
-    Rigidbody rb;
-
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
+    public Transform point1;
+    public Transform point2;
 }

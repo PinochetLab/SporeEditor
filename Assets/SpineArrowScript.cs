@@ -11,6 +11,7 @@ public class SpineArrowScript : MonoBehaviour
     public Transform startArrow;
     private bool isDown = false;
     private Vector2 startPos;
+    [SerializeField] bool last;
 
     void OnMouseEnter()
     {
@@ -33,8 +34,10 @@ public class SpineArrowScript : MonoBehaviour
     void Update()
     {
         transform.position = startArrow.position;
+      //  BodyManager.instance.ZeroSpeeds();
         if (isDown)
         {
+            
             Vector2 nowPos = Input.mousePosition;
             float dist = (nowPos - startPos).magnitude;
 
@@ -52,12 +55,14 @@ public class SpineArrowScript : MonoBehaviour
 
                 if (x > 0)
                 {
-                    BodyManager.RemoveLast();
+                    if (last) BodyManager.RemoveLast();
+                    else BodyManager.RemoveFirst();
                 }
                 else
                 {
                     float angle = Mathf.Atan2(x, y) / 5f;
-                    BodyManager.AddLast(angle);
+                    if (last) BodyManager.AddLast(angle);
+                    else BodyManager.AddFirst(angle);
                 }
                 isDown = false;
                 mesh.material = notHoverMat;
